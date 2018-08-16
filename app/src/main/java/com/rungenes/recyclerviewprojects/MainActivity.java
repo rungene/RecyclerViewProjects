@@ -23,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
         exampleList.add(new ExampleItem(R.drawable.ic_android,"Line1","Line2"));
         exampleList.add(new ExampleItem(R.drawable.ic_audiotrack,"Line3","Line4"));
         exampleList.add(new ExampleItem(R.drawable.ic_wb_sunny,"Line5","Line6"));
-        
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ExampleAdapter(exampleList);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
