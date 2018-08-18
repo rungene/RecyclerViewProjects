@@ -13,6 +13,45 @@ import java.util.ArrayList;
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHolder> {
 
     private ArrayList<ExampleItem> mExampleList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+
+    }
+
+    public void setOnClickListener(OnItemClickListener listener){
+
+        mListener = listener;
+    }
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+        TextView textView1,textView2;
+        ImageView imageView;
+
+
+
+        public MyViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+            super(itemView);
+            textView1 = itemView.findViewById(R.id.textView1);
+            textView2 = itemView.findViewById(R.id.textView2);
+            imageView = itemView.findViewById(R.id.imageView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener!= null){
+                        int position = getAdapterPosition();
+                        if (position!=RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+
+                    }
+
+
+                }
+            });
+        }
+    }
 
 
     @NonNull
@@ -21,7 +60,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_item,parent,false);
 
-        MyViewHolder mvh = new MyViewHolder(v);
+        MyViewHolder mvh = new MyViewHolder(v,mListener);
         return mvh;
 
 
@@ -49,18 +88,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
         return mExampleList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView textView1,textView2;
-        ImageView imageView;
 
-
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView1 = itemView.findViewById(R.id.textView1);
-            textView2 = itemView.findViewById(R.id.textView2);
-            imageView = itemView.findViewById(R.id.imageView);
-        }
-    }
 
 }

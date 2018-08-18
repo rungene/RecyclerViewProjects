@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ExampleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ExampleItem> mExampleList;
     private EditText edittextInsert,edittextRemove;
@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void changeItem(int position,String text){
+        mExampleList.get(position).changeText1(text);
+        mAdapter.notifyItemChanged(position);
+
+    }
+
     private void createExampleList() {
         mExampleList = new ArrayList<>();
         mExampleList.add(new ExampleItem(R.drawable.ic_android,"Line1","Line2"));
@@ -84,9 +90,16 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new ExampleAdapter(mExampleList);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnClickListener(new ExampleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                changeItem(position,"clicked");
+
+            }
+        });
     }
-
-
 }
