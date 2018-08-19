@@ -26,32 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         createExampleList();
         buiildRecyclerView();
-
-        edittextInsert = findViewById(R.id.edittext_insert);
-        edittextRemove = findViewById(R.id.edittext_remove);
-        buttonInsert = findViewById(R.id.button_insert);
-        buttonRemove = findViewById(R.id.button_remove);
-
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = Integer.parseInt(edittextInsert.getText().toString());
-                insertItem(position);
-
-
-
-            }
-        });
-        buttonRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int position = Integer.parseInt(edittextRemove.getText().toString());
-                removeItem(position);
-
-
-            }
-        });
+        setButtons();
 
 
     }
@@ -93,11 +68,46 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnClickListener(new ExampleAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new ExampleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
                 changeItem(position,"clicked");
+
+            }
+
+            @Override
+            public void onItemDelete(int position) {
+
+                removeItem(position);
+            }
+        });
+    }
+    public void setButtons(){
+
+        edittextInsert = findViewById(R.id.edittext_insert);
+        edittextRemove = findViewById(R.id.edittext_remove);
+        buttonInsert = findViewById(R.id.button_insert);
+        buttonRemove = findViewById(R.id.button_remove);
+
+
+        buttonInsert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = Integer.parseInt(edittextInsert.getText().toString());
+                insertItem(position);
+
+
+
+            }
+        });
+        buttonRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int position = Integer.parseInt(edittextRemove.getText().toString());
+                removeItem(position);
+
 
             }
         });

@@ -17,16 +17,17 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
 
     public interface OnItemClickListener{
         void onItemClick(int position);
+        void onItemDelete(int position);
 
     }
 
-    public void setOnClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener){
 
         mListener = listener;
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView textView1,textView2;
-        ImageView imageView;
+        ImageView imageView, mDeleteImage;
 
 
 
@@ -35,6 +36,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
             imageView = itemView.findViewById(R.id.imageView);
+            mDeleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,6 +52,18 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
 
                 }
             });
+            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener!= null){
+                        int position = getAdapterPosition();
+                        if (position!=RecyclerView.NO_POSITION){
+                            listener.onItemDelete(position);
+                        }
+
+                    }
+                }
+            });
         }
     }
 
@@ -62,7 +76,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
 
         MyViewHolder mvh = new MyViewHolder(v,mListener);
         return mvh;
-
 
 
     }
