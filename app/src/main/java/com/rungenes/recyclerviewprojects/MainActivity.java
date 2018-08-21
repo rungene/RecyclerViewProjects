@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<ExampleItem> mExampleList;
     private EditText edittextInsert,edittextRemove;
     private Button  buttonInsert,buttonRemove;
+
 
 
     @Override
@@ -57,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void changeItem2(int position,String text){
+        mExampleList.get(position).changeText2(text);
+        mAdapter.notifyItemChanged(position);
+
+    }
+
+
+
+
     private void createExampleList() {
         mExampleList = new ArrayList<>();
         mExampleList.add(new ExampleItem(R.drawable.ic_android,"Line1","Line2"));
@@ -78,14 +89,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
 
+                Toast.makeText(MainActivity.this, "Item "+position+"Clicked", Toast.LENGTH_SHORT).show();
+
                 changeItem(position,"clicked");
+                changeItem2(position,"clicked2");
 
             }
+
 
             @Override
             public void onItemDelete(int position) {
 
                 removeItem(position);
+                Toast.makeText(MainActivity.this, "Item "+position+"Deleted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+                ExampleItem currentItem = mExampleList.get(position);
+
+                mExampleList.get(position).changeText1("Line1");
+
+                Toast.makeText(MainActivity.this, "Item "+position+"Long clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -124,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 int position = Integer.parseInt(edittextRemove.getText().toString());
                 removeItem(position);
-
 
             }
         });

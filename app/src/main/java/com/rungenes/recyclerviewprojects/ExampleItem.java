@@ -24,8 +24,21 @@ public class ExampleItem {
         return mText2;
     }
 
+
+    public void setmText1(String mText1) {
+        this.mText1 = mText1;
+    }
+
     public void changeText1(String text){
         mText1 = text;
 
     }
+    public void changeText2(String text){
+        mText2 = text;
+
+    }
+
+
+
+
 }

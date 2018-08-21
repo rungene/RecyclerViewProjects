@@ -16,31 +16,33 @@ import java.util.List;
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHolder> implements Filterable{
 
     private ArrayList<ExampleItem> mExampleList;
-    private OnItemClickListener mListener;
+    private   OnItemClickListener mListener;
     private ArrayList<ExampleItem> mExampleListFull;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
         void onItemDelete(int position);
+        void onItemLongClick(int position);
+
 
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
-
         mListener = listener;
     }
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView textView1,textView2;
         ImageView imageView, mDeleteImage;
 
 
 
-        public MyViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public MyViewHolder(@NonNull final View itemView, final OnItemClickListener listener) {
             super(itemView);
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
             imageView = itemView.findViewById(R.id.imageView);
             mDeleteImage = itemView.findViewById(R.id.image_delete);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -49,6 +51,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
                         int position = getAdapterPosition();
                         if (position!=RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
+
                         }
 
                     }
@@ -68,7 +71,22 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.MyViewHo
                     }
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (listener!=null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onItemLongClick(position);
+
+                        }
+                    }
+                    return true;
+                }
+            });
+
         }
+
     }
 
 
